@@ -1,8 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// First Person Controller — чистая архитектура.
-/// Логика разделена: движение, прыжок, взгляд, сглаживание.
+/// Управление игроком и камерой
 /// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
