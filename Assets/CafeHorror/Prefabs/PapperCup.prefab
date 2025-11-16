@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 5824580374296531962}
   - component: {fileID: 3066549983039901009}
   - component: {fileID: 2429811254878047352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Papper Cup 8 OZ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
