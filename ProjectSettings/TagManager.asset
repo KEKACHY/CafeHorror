@@ -11,9 +11,9 @@ TagManager:
   - Effect
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Interactable
+  - Attachable
+  - Player
   - 
   - 
   - 
