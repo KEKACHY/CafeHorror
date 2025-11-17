@@ -4,19 +4,14 @@ public class StaticInteractable : MonoBehaviour
 {
     [SerializeField] GameObject instansDynamicObject = null;
 
-    public DynamicInteractable Interact(Transform holdPoint)
+    public virtual void Interact(Transform holdPoint, out DynamicInteractable result)
     {
+        result = null;
         if(instansDynamicObject != null)
         {
             DynamicInteractable dynamicInteractable = Instantiate(instansDynamicObject, holdPoint).GetComponent<DynamicInteractable>();
             dynamicInteractable.Pickup(holdPoint);
-            return dynamicInteractable;
+            result = dynamicInteractable;
         }
-        return null;
-    }
-
-    private void OnMouseDown()
-    {
-        
     }
 }

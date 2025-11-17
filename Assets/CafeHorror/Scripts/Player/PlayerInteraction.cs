@@ -62,7 +62,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void TryInteract()
     {
-        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out RaycastHit hit, interactDistance, interactableLayer))
+        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out RaycastHit hit, interactDistance, interactableLayer, QueryTriggerInteraction.Ignore))
         {
             if (hit.collider.TryGetComponent(out DynamicInteractable dynamicObj))
             {
@@ -71,7 +71,7 @@ public class PlayerInteraction : MonoBehaviour
             }
             else if (hit.collider.TryGetComponent(out StaticInteractable staticObj))
             {
-                _current = staticObj.Interact(holdPoint);
+                staticObj.Interact(holdPoint, out _current);
             }
         }
     }
@@ -88,4 +88,5 @@ public class PlayerInteraction : MonoBehaviour
         _current.Drop();
         _current = null;
     }
+
 }

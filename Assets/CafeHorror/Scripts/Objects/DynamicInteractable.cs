@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(HoldBehaviour))]
 [RequireComponent(typeof(AttachBehaviour))]
@@ -33,7 +34,6 @@ public class DynamicInteractable : MonoBehaviour
     public void Throw(Vector3 direction, float force)
     {
         Drop(); 
-
         if (TryGetComponent<Rigidbody>(out var rb))
         {
             rb.AddForce(direction * force, ForceMode.Impulse);
