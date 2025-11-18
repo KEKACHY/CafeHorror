@@ -10,15 +10,11 @@ public class CoffeeMachine :  StaticInteractable
         {
             if (interactable.TryGetComponent(out CoffeeCup cup))
             {
-                if(_coffeeCup == null && !cup.IsHeld)
+                if(_coffeeCup == null && !cup.IsHeld && !cup.CoffeeIsFull)
                 {
                     _coffeeCup = cup;
                     cup.Pickup(cupPlace);
-                }
-                else if(_coffeeCup != null && cup.IsHeld)
-                {
-                    _coffeeCup = null;
-                }   
+                } 
             }
         }
     }
@@ -26,5 +22,11 @@ public class CoffeeMachine :  StaticInteractable
     public override void Interact(Transform holdPoint, out DynamicInteractable result)
     {
         result = null;
+        if(_coffeeCup != null && !_coffeeCup.CoffeeIsFull)
+        {
+            _coffeeCup.CoffeeIsFull = true;
+            _coffeeCup.Drop();
+            _coffeeCup = null;
+        }
     }
 }

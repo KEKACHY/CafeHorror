@@ -5,10 +5,9 @@ using System;
 [RequireComponent(typeof(AttachBehaviour))]
 public class DynamicInteractable : MonoBehaviour
 {
-    private IHoldable _holdable;
-    private IAttachable _attachable;
+    protected IHoldable _holdable;
+    protected IAttachable _attachable;
 
-    private Transform _pendingAttachPoint;
     [HideInInspector] public bool IsHeld => CheckIfHeld();
 
     private void Awake()
@@ -40,29 +39,8 @@ public class DynamicInteractable : MonoBehaviour
         }
     }
 
-    public void Drop()
+    public virtual void Drop()
     {
         _holdable.Drop();
-        _attachable.TryAttach(_pendingAttachPoint);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!_holdable.IsHeld)
-            return;
-
-        if (other.TryGetComponent(out AttachPoint attachPoint))
-        {
-            _pendingAttachPoint = attachPoint.transform;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent(out AttachPoint attachPoint)
-            && _pendingAttachPoint == attachPoint.transform)
-        {
-            _pendingAttachPoint = null;
-        }
     }
 }

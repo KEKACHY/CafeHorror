@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8506834932177705773}
   - component: {fileID: 3581244204155212554}
   - component: {fileID: 2763497321635320505}
-  - component: {fileID: 711456626962647418}
+  - component: {fileID: 300721397435815007}
   - component: {fileID: 3573852652828430788}
   m_Layer: 6
   m_Name: PlasticCap
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b498645ee72a87a458a7ee0025a688f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &711456626962647418
+--- !u!114 &300721397435815007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2092371920296142265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c9443af4f83241489300dccf5de6915, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f8d00a71bc7b8a45868963e2c394cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &3573852652828430788

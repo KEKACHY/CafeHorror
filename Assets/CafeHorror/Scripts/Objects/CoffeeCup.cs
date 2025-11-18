@@ -12,6 +12,7 @@ public class CoffeeCup : DynamicInteractable
         if (attachPoint != null)
             OnCoffeeIsFullChanged += attachPoint.OnCupFullStateChanged;
     }
+
     public bool CoffeeIsFull
     {
         get => _coffeeIsFull;

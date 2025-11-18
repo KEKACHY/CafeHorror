@@ -17,6 +17,11 @@ public class AttachPoint : MonoBehaviour
         }
     }
 
+    public void HideAttachPoint()
+    {
+       DisablePoint();
+    }
+
     private void Awake()
     {
         _collider = GetComponent<Collider>();
@@ -32,6 +37,6 @@ public class AttachPoint : MonoBehaviour
     private void DisablePoint()
     {
         _collider.enabled = false;
-        ToolTip.SetActive(true);
+        ToolTip.SetActive(false);
     }
 }

@@ -64,7 +64,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out RaycastHit hit, interactDistance, interactableLayer, QueryTriggerInteraction.Ignore))
         {
-            if (hit.collider.TryGetComponent(out DynamicInteractable dynamicObj))
+            if (hit.collider.TryGetComponent(out DynamicInteractable dynamicObj) && !dynamicObj.IsHeld)
             {
                 _current = dynamicObj;
                 _current.Pickup(holdPoint);

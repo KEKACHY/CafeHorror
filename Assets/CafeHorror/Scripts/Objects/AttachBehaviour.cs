@@ -34,6 +34,11 @@ public class AttachBehaviour : MonoBehaviour, IAttachable
         Collider lidCol = GetComponent<Collider>();
         if (lidCol != null)
             lidCol.enabled = false;
+
+        if(parent.TryGetComponent(out AttachPoint collider))
+        {
+            collider.HideAttachPoint();
+        }
     }
 
     public void Detach()
