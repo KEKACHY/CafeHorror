@@ -6,7 +6,7 @@ public class CoffeeCup : DynamicInteractable
     public event Action<bool> OnCoffeeIsFullChanged;
     private bool _coffeeIsFull = false;
     [SerializeField] private AttachPoint attachPoint;
-
+    public SkinnedMeshRenderer Coffee;
     private void Start()
     {
         if (attachPoint != null)

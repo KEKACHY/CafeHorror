@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6970612629532083215
 Transform:
@@ -151,6 +151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CupCollection
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed7ff6d7e5df3674983c65971696e1df,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
