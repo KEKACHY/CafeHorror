@@ -37,6 +37,7 @@ public class CoffeeMachine :  StaticInteractable
         _isFilling = true;
         float timer = 0f;
         coffee.SetActive(true);
+        _coffeeCup.Coffee.gameObject.SetActive(true);
 
         while (timer < timeDuration)
         {

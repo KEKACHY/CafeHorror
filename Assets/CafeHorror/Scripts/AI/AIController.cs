@@ -10,6 +10,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private Transform targetPosition;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject knife;
+    [SerializeField] private GameObject winTrigger;
     private const string speedParameter = "Speed";
     private const string wantKill = "WantKill";
     private const string hasKnife = "HasKnife";
@@ -26,6 +27,8 @@ public class AIController : MonoBehaviour
     public string WantKill => wantKill;
     public string HasKnife => hasKnife;
     public GameObject Knife => knife;
+    public GameObject WinTrigger => winTrigger;
+    public bool IsHasKnife =>  animator.GetBool(hasKnife);
 
     public float MoveSpeed => moveSpeed;
     public float ChaseSpeed => chaseSpeed;
@@ -46,5 +49,17 @@ public class AIController : MonoBehaviour
     {
         StateMachine.Update();
         animator.SetFloat(speedParameter, agent.velocity.magnitude);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out CoffeeCup coffeeCup))
+        {
+            if (coffeeCup.IsHeld || !coffeeCup.CoffeeIsFull)
+                return;
+
+            Destroy(coffeeCup.gameObject);
+            TakedItem = true;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Управление игроком и камерой
@@ -43,7 +44,6 @@ public class PlayerController : MonoBehaviour
         HandleCrouch();
     }
 
-    #region Look
     private void HandleLook()
     {
         Vector2 targetMouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
@@ -57,9 +57,7 @@ public class PlayerController : MonoBehaviour
         // Вращение персонажа по горизонтали
         transform.Rotate(Vector3.up * currentMouseDelta.x * lookSensitivity);
     }
-    #endregion
 
-    #region Movement
     private void HandleMovement()
     {
         float moveX = Input.GetAxis("Horizontal");
@@ -82,9 +80,7 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move((move * speed + velocity) * Time.deltaTime);
     }
-    #endregion
     
-    #region Crouch
     private void HandleCrouch()
     {
         if (Input.GetKey(KeyCode.LeftControl))
@@ -92,5 +88,15 @@ public class PlayerController : MonoBehaviour
         else
             controller.height = Mathf.Lerp(controller.height, standingHeight, Time.deltaTime * 10f);
     }
-    #endregion
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out AIController enemy))
+        {
+            if (!enemy.IsHasKnife)
+                return;
+            StartSceneParam.IsWin = false;
+            SceneManager.LoadScene("WinOrLoseScene");
+        }
+    }
 }

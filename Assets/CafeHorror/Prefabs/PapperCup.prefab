@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4662780938583417726}
   - component: {fileID: 978140306911610011}
   - component: {fileID: 1442009984588968252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cap 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3866467686932551509}
   - component: {fileID: 4165939180203822051}
   - component: {fileID: 8857579400131302578}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttachCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,6 +408,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831567065216400070, guid: 2212d575ea474cf44a16e0e964e57adf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

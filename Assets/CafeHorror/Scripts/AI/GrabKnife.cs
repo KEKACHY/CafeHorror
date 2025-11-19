@@ -20,6 +20,7 @@ public class GrabKnife : IState
         {
             _controller.Animator.SetBool(_controller.HasKnife, true);
             _controller.StateMachine.ChangeState(new ChaseState(_controller));
+            _controller.WinTrigger?.SetActive(true);
         } 
     }
 
