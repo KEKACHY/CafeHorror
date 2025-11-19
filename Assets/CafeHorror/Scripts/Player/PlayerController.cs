@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
+    [SerializeField] private float stepIntervalWalk = 0.5f;
+    [SerializeField] private float stepIntervalRun = 0.35f;
+    [SerializeField] private float stepIntervalCrouch = 0.8f;
     [SerializeField] private float walkSpeed = 2f;
     [SerializeField] private float runSpeed = 4f;
     [SerializeField] private float crouchSpeed = 1f;
@@ -23,11 +26,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float crouchHeight = 0.3f;
     [SerializeField] private float standingHeight = 0.6f;
 
+    [SerializeField] private AudioSource FootStepAudio;
+
     private CharacterController controller;
     private Vector3 velocity;
     private float xRotation = 0f;
     private Vector2 currentMouseDelta;
     private Vector2 currentMouseDeltaVelocity;
+    private float stepTimer;
+    
 
     private void Awake()
     {
@@ -49,12 +56,10 @@ public class PlayerController : MonoBehaviour
         Vector2 targetMouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetMouseDelta, ref currentMouseDeltaVelocity, smoothTime);
 
-        // Вращение камеры по вертикали
         xRotation -= currentMouseDelta.y * lookSensitivity;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        // Вращение персонажа по горизонтали
         transform.Rotate(Vector3.up * currentMouseDelta.x * lookSensitivity);
     }
 
@@ -62,15 +67,21 @@ public class PlayerController : MonoBehaviour
     {
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
-
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
 
-        // Определяем скорость
         float speed = walkSpeed;
-        if (Input.GetKey(KeyCode.LeftShift)) speed = runSpeed;
-        if (Input.GetKey(KeyCode.LeftControl)) speed = crouchSpeed;
+        float stepInterval = stepIntervalWalk;
 
-        // Прыжок и гравитация
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            speed = runSpeed;
+            stepInterval = stepIntervalRun;
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl)) {
+            speed = crouchSpeed;
+            stepInterval = stepIntervalCrouch;
+        }
+
         if (controller.isGrounded && velocity.y < 0)
             velocity.y = -2f;
 
@@ -78,15 +89,41 @@ public class PlayerController : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
         velocity.y += gravity * Time.deltaTime;
+
         controller.Move((move * speed + velocity) * Time.deltaTime);
+
+        HandleFootsteps(move, stepInterval);
     }
     
     private void HandleCrouch()
     {
         if (Input.GetKey(KeyCode.LeftControl))
-            controller.height = Mathf.Lerp(controller.height, crouchHeight, Time.deltaTime * 10f);
+        {
+            controller.height = Mathf.Lerp(controller.height, crouchHeight, Time.deltaTime * 10f); FootStepAudio.volume = 0.05f;
+        }
         else
-            controller.height = Mathf.Lerp(controller.height, standingHeight, Time.deltaTime * 10f);
+            controller.height = Mathf.Lerp(controller.height, standingHeight, Time.deltaTime * 10f); FootStepAudio.volume = 0.1f;
+    }
+
+    private void HandleFootsteps(Vector3 move, float interval)
+    {
+        if (!controller.isGrounded) return;
+
+        stepTimer -= Time.deltaTime;
+
+        if (stepTimer <= 0f)
+        {
+            if (move.magnitude < 0.1f)
+            {
+                FootStepAudio.Stop();
+                stepTimer = 0f;
+                return;
+            }
+            FootStepAudio.pitch = Random.Range(0.9f, 1.1f);
+            FootStepAudio.Play();
+
+            stepTimer = interval; 
+        }
     }
     
     private void OnTriggerEnter(Collider other)

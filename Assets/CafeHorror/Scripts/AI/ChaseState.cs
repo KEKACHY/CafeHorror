@@ -17,6 +17,7 @@ public class ChaseState : IState
 
     public void Update()
     {
+        _controller.HandleFootsteps(_controller.StepIntervalRun);
         _controller.Agent.SetDestination(_controller.Player.position);
     }
 

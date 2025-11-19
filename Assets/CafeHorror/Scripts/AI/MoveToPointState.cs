@@ -19,7 +19,7 @@ public class MoveToPointState : IState
     {
         if(_controller.Agent.pathPending)
             return;
-
+        _controller.HandleFootsteps(_controller.StepIntervalWalk);
         if(_controller.Agent.remainingDistance <= _controller.StoppingDistance)
         {
             _controller.StateMachine.ChangeState(new WaitingState(_controller));

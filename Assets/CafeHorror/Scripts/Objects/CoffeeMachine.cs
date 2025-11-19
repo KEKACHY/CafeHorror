@@ -8,6 +8,7 @@ public class CoffeeMachine :  StaticInteractable
     [SerializeField] private Transform cupPlace;
     [SerializeField] private GameObject coffee;
     [SerializeField] [Range(1f, 20f)] private float timeDuration = 5f;
+    [SerializeField] private AudioSource machineWork;
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponentInParent<DynamicInteractable>() is DynamicInteractable interactable)
@@ -28,6 +29,7 @@ public class CoffeeMachine :  StaticInteractable
         result = null;
         if(_coffeeCup != null && !_coffeeCup.CoffeeIsFull && !_isFilling)
         {
+            machineWork.Play();
             StartCoroutine(FillCupRoutine());
         }
     }
