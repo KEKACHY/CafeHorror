@@ -19,8 +19,8 @@ public class WaitingState : IState
     {
         if(_controller.TakedItem || _timer <= 0f)
         {
-            _controller.StateMachine.ChangeState(new ChaseState(_controller));
-            Debug.Log(_timer);
+            _controller.Animator.SetBool(_controller.WantKill, true);
+            _controller.StateMachine.ChangeState(new GrabKnife(_controller));
             return;
         }
         _timer -= Time.deltaTime;
