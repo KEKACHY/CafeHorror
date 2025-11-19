@@ -13,12 +13,18 @@ public class WaitingState : IState
     {
         _timer = _controller.WaitTime;
         _controller.Agent.ResetPath();
+        DialogueManager.Instance.StartDialogue(_controller.Dialogues[0]);
     }
 
     public void Update()
     {
         if(_controller.TakedItem || _timer <= 0f)
         {
+            if(_controller.TakedItem)
+                DialogueManager.Instance.StartDialogue(_controller.Dialogues[1]);
+            else
+                DialogueManager.Instance.StartDialogue(_controller.Dialogues[2]);
+
             _controller.Animator.SetBool(_controller.WantKill, true);
             _controller.StateMachine.ChangeState(new GrabKnife(_controller));
             return;

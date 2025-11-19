@@ -27,13 +27,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float standingHeight = 0.6f;
 
     [SerializeField] private AudioSource FootStepAudio;
-
+    
     private CharacterController controller;
     private Vector3 velocity;
     private float xRotation = 0f;
     private Vector2 currentMouseDelta;
     private Vector2 currentMouseDeltaVelocity;
     private float stepTimer;
+    [HideInInspector] public bool forceLook = false;
+    [HideInInspector] public Transform targetPoint;
+
+    [SerializeField] private Dialogue[] dialogue;
     
 
     private void Awake()
@@ -44,11 +48,21 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void Start()
+    {
+        DialogueManager.Instance.StartDialogue(dialogue[0]);
+    }
+
     private void Update()
     {
-        HandleLook();
+        if (!forceLook)
+            HandleLook();
+
         HandleMovement();
         HandleCrouch();
+
+        if (forceLook)
+            LookAtSmooth(targetPoint, 4f);
     }
 
     private void HandleLook()
@@ -125,6 +139,20 @@ public class PlayerController : MonoBehaviour
             stepTimer = interval; 
         }
     }
+
+    public void LookAtSmooth(Transform target, float speed)
+    {
+        Vector3 dir = target.position - playerCamera.position;
+
+        Vector3 flat = dir; flat.y = 0;
+        Quaternion bodyRot = Quaternion.LookRotation(flat);
+        transform.rotation = Quaternion.Lerp(transform.rotation, bodyRot, Time.deltaTime * speed);
+
+        Quaternion camRot = Quaternion.LookRotation(dir);
+        playerCamera.rotation = Quaternion.Lerp(playerCamera.rotation, camRot, Time.deltaTime * speed);
+    }
+
+    
     
     private void OnTriggerEnter(Collider other)
     {

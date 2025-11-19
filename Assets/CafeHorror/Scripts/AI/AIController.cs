@@ -23,6 +23,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private float chaseSpeed = 2f;
     [SerializeField] private float stoppingDistance = 0.3f;
     [SerializeField] private float waitTime = 60f;
+    [SerializeField] private Dialogue[] dialogue;
 
     public NavMeshAgent Agent => agent;
     public Transform Player => player;
@@ -40,6 +41,7 @@ public class AIController : MonoBehaviour
     public float WaitTime => waitTime;
     public float StepIntervalWalk => stepIntervalWalk;
     public float StepIntervalRun => stepIntervalRun;
+    public Dialogue[] Dialogues => dialogue;
 
     public event System.Action<string> OnStateChanged;
 
